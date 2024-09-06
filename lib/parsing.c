@@ -3,7 +3,16 @@
 #include <math.h>
 // implement interpolation here
 int interpolation(uint16_t channel) {
-	// write interpolation code here
+    // Clamp the channel value to be within the valid range
+    if (channel < CHANNEL_MIN) {
+        channel = CHANNEL_MIN;
+    } else if (channel > CHANNEL_MAX) {
+        channel = CHANNEL_MAX;
+    }
+ // Calculate PWM value based on the channel value
+    int pwm = (int)(((float)(channel - CHANNEL_MIN) / (CHANNEL_MAX - CHANNEL_MIN)) * (PWM_MAX - PWM_MIN) + PWM_MIN);
+
+    return pwm;
 }
 // creating 11 bit channel
 uint16_t *parse_buffer(uint8_t buff[]) { 
