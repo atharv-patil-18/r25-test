@@ -44,15 +44,29 @@ If you are able to compile your code successfully you should see something like 
 
 # Solution
 ## Understanding
-Describe what you understood about the problem.
+The problem involves controlling a Sabertooth 2x60 motor driver using data from an RC transmitter. The transmitter communicates via the SBUS protocol, which sends data in a serialized format. Our task is to:
+
+1) Extract Data: Read RC channel values from the SBUS data.
+2) Convert Data: Map these values into PWM signals that the Sabertooth motor driver understands.
+3) Control Motor: Send the converted PWM values to the Sabertooth motor driver to control the rover’s motor.
 
 ## Thought Process
-After understanding the problem, describe how you decided to proceed towards solving the question.
+1) Data Protocol Insight: First, I examined the SBUS protocol, which sends channel data in a compact, serialized format. Each channel value is 11 bits, so extracting these values correctly is crucial.
+
+2) PWM Value Mapping: The Sabertooth motor driver uses PWM values ranging from 0 to 255. Meanwhile, RC channel values range from 0 to 2047. Thus, I needed to map the channel values into this PWM range.
+
+3) Interpolation Approach: I opted for linear interpolation to scale the RC channel values (0-2047) to PWM values (0-255). This approach ensures a straightforward and accurate conversion from one range to the other.
+
+4) Implementation and Testing: I developed the interpolation function to handle this scaling. To ensure accuracy, I compiled and tested the code using the provided Makefile, verifying that the function correctly maps channel values to PWM signals.
 
 ## Implementation
-How did you decide to implement your solution.
+1) Scaling Choice: I used linear interpolation to map RC channel values (0-2047) to PWM values (0-255) for the Sabertooth motor driver. This method ensures a proportional and smooth conversion.
 
-Mention the details, such as the scaling used in the interpolation and how you tested it.
+2) Interpolation Formula: The formula scales the input range directly to the output range, making it simple and effective.
+
+3) Testing: After implementing the function, I compiled and tested the code using Makefile to ensure the PWM values correctly controlled the motor based on the RC input.
+
+This approach ensured accurate and responsive motor control.
 
 # Google Form
 [Link to Repo Submission](https://docs.google.com/forms/d/e/1FAIpQLSeKVbm2dqWxwA5lbEkRfzY8KF619mI5ibGs0Cm2e5wrb0hoWQ/viewform)
